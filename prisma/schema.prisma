@@ -1,0 +1,29 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url = env("DATABASE_URL")
+}
+
+model User {
+    id Int  @id     @default(autoincrement())
+    fullName    String
+    email       String
+    token       String
+}
+
+model Country {
+    id      Int     @id     @default(autoincrement())
+    name    String
+    cities   City[]
+}
+
+model City {
+    id       Int    @id         @default(autoincrement())
+    name     String
+    country_id     Int
+    country     Country @relation(fields: [country_id], references: [id])
+}
+
